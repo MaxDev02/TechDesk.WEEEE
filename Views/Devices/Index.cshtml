@@ -1,0 +1,17 @@
+@model IEnumerable<Device>
+@{ ViewData["Title"] = "Devices"; }
+<h1>Devices</h1>
+<p class="text-muted">A simple list of laptops and tablets owned by the IT office.</p>
+@if (TempData["Message"] != null) { <div class="alert alert-success">@TempData["Message"]</div> }
+<form asp-action="Index" method="get" class="row g-2 mb-3">
+    <div class="col-md-5"><label for="searchName" class="form-label">Part of device name</label><input id="searchName" name="searchName" value="@ViewBag.SearchName" class="form-control" placeholder="e.g. thinkpad" /></div>
+    <div class="col-md-3 d-flex align-items-end"><div class="form-check mb-2"><input class="form-check-input" type="checkbox" id="availableOnly" name="availableOnly" value="true" checked="@(ViewBag.AvailableOnly == true)" /><label class="form-check-label" for="availableOnly">Available only</label></div></div>
+    <div class="col-md-4 d-flex align-items-end gap-2"><button class="btn btn-primary" type="submit">Search</button><a asp-action="Index" class="btn btn-outline-secondary">Clear</a></div>
+</form>
+<div class="d-flex justify-content-between align-items-center mb-2"><strong>@ViewBag.DeviceCount devices</strong><a asp-action="Create" class="btn btn-success">+ Add a device</a></div>
+<div class="table-responsive"><table class="table table-striped table-bordered align-middle">
+<thead class="table-light"><tr><th>Asset tag</th><th>Name</th><th>Category</th><th>Year bought</th><th>Status</th><th>Actions</th></tr></thead>
+<tbody>
+@foreach (var device in Model) { <partial name="_DeviceRow" model="device" /> }
+@if (!Model.Any()) { <tr><td colspan="6" class="text-center text-muted">No devices found. The search may be a little too successful.</td></tr> }
+</tbody></table></div>

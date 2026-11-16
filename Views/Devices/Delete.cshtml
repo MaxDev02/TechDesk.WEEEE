@@ -1,0 +1,5 @@
+@model Device
+@{ ViewData["Title"] = "Delete device"; }
+<h1>Delete device?</h1>
+<div class="alert alert-warning">Are you sure you want to delete <strong>@Model.AssetTag — @Model.Name</strong>? This cannot be undone.</div>
+<form asp-action="Delete" method="post"><input type="hidden" name="id" value="@Model.Id" /><button type="submit" class="btn btn-danger">Yes, delete it (send it to the digital afterlife)</button> <a asp-action="Index" class="btn btn-success">No, keep it (I changed my mind)</a></form>
